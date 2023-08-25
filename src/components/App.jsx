@@ -14,7 +14,7 @@ export const App = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(null);
+  // const [isError, setIsError] = useState(null);
   const [totalImages, setTotalImages] = useState(0);
   // const [showModal, setShowModal] = useState(false);
   const [largeImageURL, setLargeImageURL] = useState('');
@@ -33,7 +33,7 @@ export const App = () => {
         setImages(prevImages => [prevImages.images, ...data.hits]);
         setTotalImages(data.totalHits);
       } catch (error) {
-        setIsError('Failed to load images');
+        Notify.failure('Failed to load images');
       } finally {
         setIsLoading(false);
       }
