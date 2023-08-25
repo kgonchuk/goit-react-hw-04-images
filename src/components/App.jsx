@@ -14,9 +14,7 @@ export const App = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  // const [isError, setIsError] = useState(null);
   const [totalImages, setTotalImages] = useState(0);
-  // const [showModal, setShowModal] = useState(false);
   const [largeImageURL, setLargeImageURL] = useState('');
 
   useEffect(() => {
@@ -30,7 +28,7 @@ export const App = () => {
         if (data.totalHits === 0) {
           Notify.failure('There are no images!');
         }
-        setImages(prevImages => [prevImages.images, ...data.hits]);
+        setImages(prevImages => [...prevImages, ...data.hits]);
         setTotalImages(data.totalHits);
       } catch (error) {
         Notify.failure('Failed to load images');
@@ -42,6 +40,10 @@ export const App = () => {
   }, [searchQuery, currentPage]);
 
   const onSubmitSearch = query => {
+    if (query === searchQuery) {
+      Notify.failure(`Images of ${query} have already been displayed.`);
+      return;
+    }
     setSearchQuery(query);
     setImages([]);
     setCurrentPage(1);
